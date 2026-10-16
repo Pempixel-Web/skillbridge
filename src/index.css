@@ -7,3 +7,10 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
 }
+
+
+@media (max-width: 640px) {
+  body {
+    padding-bottom: 64px;
+  }
+}

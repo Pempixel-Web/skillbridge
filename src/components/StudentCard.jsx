@@ -6,12 +6,21 @@ export default function StudentCard({ student }) {
       {/* Top Header: Avatar & Bookmark Icon */}
       <div className="card-header">
         <img
-          src={student.avatar || "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80"}
+          src={
+            student.avatar ||
+            "https://res.cloudinary.com/rclvnovx/image/upload/v1792170963/Screenshot_2026-10-16_181518.png"
+          }
           alt={student.name}
           className="student-avatar"
         />
         <button className="bookmark-btn" aria-label="Save profile">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="bookmark-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="bookmark-icon"
+          >
             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
           </svg>
         </button>

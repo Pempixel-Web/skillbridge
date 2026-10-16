@@ -1,0 +1,97 @@
+/* Navbar container */
+
+.navbar {
+  height: 58px;
+  width: 100%;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  box-shadow: 0 3px #d8dce5;
+  position: sticky;
+}
+
+/* Desktop links */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.nav-links a {
+  font-family: "Inter", sans-serif;
+  font-weight: 600; /* Matches "Semi Bold" in Figma[cite: 1] */
+  font-size: 12px; /* Matches "14" in Figma[cite: 1] */
+  line-height: normal; /* "Auto" in Figma[cite: 1] defaults to normal browser spacing */
+  letter-spacing: 0px; /* Matches "0%" in Figma[cite: 1] */
+  text-decoration: none; /* Removes default link underline */
+  color: #595858;
+  align-items: center;
+}
+.nav-links .active {
+  color: #000000;
+}
+.nav-links a button {
+  color: #3348d8;
+  background-color: #ffffff;
+  border: 1px solid #d8dce5;
+  width: 145px;
+  height: 33px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.logo {
+  margin: 0;
+  height: 25px;
+  width: auto;
+  display: block;
+}
+
+/* Hide hamburger on desktop */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: blue;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 20px;
+  }
+
+  /* Show hamburger */
+  .hamburger {
+    display: block;
+  }
+
+  /* Hide links by default */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 65px;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background-color: #111;
+    box-sizing: border-box;
+  }
+
+  /* Show links when clicked */
+  .nav-links.active {
+    display: flex;
+  }
+}

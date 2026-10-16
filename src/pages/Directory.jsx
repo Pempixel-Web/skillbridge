@@ -10,7 +10,7 @@
 // export default Directory;
 
 import { useState } from "react";
-import Hero from "../components/hero.jsx";
+import Hero from "../components/Hero.jsx";
 import StudentCard from "../components/StudentCard.jsx";
 
 export default function Directory() {

@@ -1,16 +1,46 @@
-# React + Vite
+# SkillBridge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A student talent discovery directory that helps university students discover other students by their skills and interests.
 
-Currently, two official plugins are available:
+## Project Idea
+Students have useful skills but may not have an easy way for others in their university community to discover their abilities. SkillBridge aims to make student talent easier to find.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Technology Stack
+- React
+- JavaScript
+- Vite
+- CSS
+- Vercel
 
-## React Compiler
+## Links
+- Live Website: https://skillbridggeeee.vercel.app/
+- GitHub Repository: https://github.com/Pempixel-Web/skillbridge
+- Figma Design: https://www.figma.com/design/ocHlefvPtj6GQhMZ6LRUti/Untitled?node-id=0-1&t=klLT0hwtZ4XKapU7-1
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
+Serach Profile
+Filter Profile
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Requirements
+Node.js and npm installed.
+
+### Installation
+```bash
+npm install
+```
+
+### Run locally
+```bash
+npm run dev
+```
+
+### Production build
+```bash
+npm run build
+```
+
+## Interactions
+Search to filter profile
+And a button to filter profile

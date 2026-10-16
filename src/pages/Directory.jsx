@@ -1,10 +1,8 @@
+import Hero from "../components/Hero.jsx";
 function Directory() {
   return (
     <main>
-      <section>
-        <button>STUDENT TALENT DIRECTORY</button>
-        <h1>Discover</h1>
-      </section>
+      <Hero />
     </main>
   );
 }

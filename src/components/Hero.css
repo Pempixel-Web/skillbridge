@@ -1,0 +1,392 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+.hero {
+  width: 100%;
+  background: #f8faff;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
+}
+
+.hero-inner {
+  width: 100%;
+  max-width: 1440px;
+  min-height: 530px;
+  margin: 0 auto;
+  padding: 64px 4.3% 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-content {
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+  padding-bottom: 0;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border-radius: 30px;
+  background: #e5edff;
+  color: #3b4df5;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+  white-space: nowrap;
+}
+
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #4557ff;
+}
+
+.hero h1 {
+  max-width: 680px;
+  margin: 20px 0 22px;
+  color: #0b1e43;
+  font-size: clamp(38px, 4vw, 60px);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -2px;
+}
+
+.hero h1 span {
+  display: block;
+  color: #4d5bff;
+}
+
+.hero-description {
+  max-width: 500px;
+  margin: 0 0 36px;
+  color: #899fc3;
+  font-size: 19px;
+  line-height: 1.65;
+}
+
+.hero-search {
+  width: 100%;
+  max-width: 610px;
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  gap: 8px;
+  background: #fff;
+  border: 1.5px solid #d7deeb;
+  border-radius: 13px;
+  box-shadow: 0 2px 3px rgb(14 32 70 / 7%);
+}
+
+.search-input-wrap {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding-left: 14px;
+}
+
+.search-icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: #91a3c2;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.search-input-wrap input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #0b1e43;
+  font: inherit;
+  font-size: 15px;
+}
+
+.search-input-wrap input::placeholder {
+  color: #899fc3;
+  opacity: 1;
+}
+
+.search-button {
+  min-width: 160px;
+  min-height: 59px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 11px;
+  background: #3949ed;
+  color: white;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background: #2f3ed6;
+}
+
+.search-button span {
+  font-size: 23px;
+  line-height: 1;
+}
+
+.popular-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+  padding-bottom: 28px;
+}
+
+.skill-chip {
+  min-height: 46px;
+  padding: 0 19px;
+  border: 1.5px solid #d6ddeb;
+  border-radius: 28px;
+  background: #fff;
+  color: #26365b;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.skill-chip.active {
+  border-color: #3949ed;
+  background: #3949ed;
+  color: #fff;
+}
+
+.hero-visual {
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-visual img {
+  display: block;
+  width: 90%;
+  max-width: none;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Tablets and smaller laptops */
+@media (max-width: 1024px) {
+  .hero-inner {
+    padding: 52px 28px 0;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+    gap: 8px;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 4.5vw, 48px);
+    letter-spacing: -1.5px;
+  }
+
+  .hero-description {
+    font-size: 16px;
+    margin-bottom: 25px;
+  }
+
+  .hero-visual img {
+    width: 125%;
+  }
+
+  .search-button {
+    min-width: 120px;
+  }
+
+  .skill-chip {
+    padding: 0 14px;
+  }
+}
+
+/* Mobile: match the supplied Figma layout */
+@media (max-width: 640px) {
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    min-height: auto;
+    padding: 20px 16px 10px;
+  }
+
+  .hero-content {
+    display: contents;
+  }
+
+  .hero-badge {
+    order: 1;
+    align-self: flex-start;
+    padding: 5px 9px;
+    gap: 5px;
+    font-size: 9px;
+    letter-spacing: 0.9px;
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .hero h1 {
+    order: 2;
+    max-width: 360px;
+    margin: 9px 0 8px;
+    font-size: clamp(32px, 8.5vw, 38px);
+    line-height: 0.99;
+    letter-spacing: -1.2px;
+  }
+
+  .hero h1 span {
+    display: block;
+  }
+
+  .hero-description {
+    order: 3;
+    max-width: 340px;
+    margin: 0 0 5px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .hero-visual {
+    order: 4;
+    width: 100%;
+    margin: 0 auto 0;
+    overflow: visible;
+  }
+
+  .hero-visual img {
+    width: 100%;
+    max-width: 390px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .hero-search {
+    order: 5;
+    position: relative;
+    z-index: 2;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    width: 100%;
+    max-width: none;
+    min-height: 0;
+    margin-top: -2px;
+    padding: 6px;
+    border-radius: 13px;
+    background: #fff;
+  }
+
+  .search-input-wrap {
+    min-height: 27px;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 5px;
+  }
+
+  .search-icon {
+    width: 19px;
+    height: 19px;
+  }
+
+  .search-input-wrap input {
+    flex: 0 1 230px;
+    width: auto;
+    min-height: 27px;
+    padding: 3px 0;
+    font-size: 11px;
+  }
+
+  .search-button {
+    width: 100%;
+    min-height: 40px;
+    gap: 9px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+
+  .search-button span {
+    font-size: 18px;
+  }
+
+  .popular-skills {
+    order: 6;
+    flex-wrap: nowrap;
+    gap: 6px;
+    margin: 9px -2px 0;
+    padding: 0 2px 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .popular-skills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .skill-chip {
+    min-height: 28px;
+    flex: 0 0 auto;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 20px;
+    background: #e5edff;
+    color: #263fff;
+    font-size: 9px;
+  }
+
+  .skill-chip.active {
+    background: #3949ed;
+    color: white;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  .hero-inner {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .hero h1 {
+    font-size: 31px;
+  }
+
+  .hero-badge {
+    font-size: 8px;
+  }
+
+  .search-input-wrap input {
+    font-size: 10px;
+  }
+}

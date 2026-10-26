@@ -1,67 +1,44 @@
-// import Hero from "../components/Hero.jsx";
-// function Directory() {
-//   return (
-//     <main>
-//       <Hero />
-//     </main>
-//   );
-// }
-
-// export default Directory;
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Hero from "../components/Hero.jsx";
 import StudentCard from "../components/StudentCard.jsx";
+import { fetchStudents } from "../api/students.js";
 
 export default function Directory() {
+  // --- Filter state ---
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSkill, setSelectedSkill] = useState("All skills");
 
-  // Sample student database matching your categories and filters
-  const [students] = useState([
-    {
-      id: 1,
-      name: "Ezekiel Vincent",
-      role: "Frontend Developer",
-      skills: ["React", "Javascript", "CSS", "Development"],
-      bio: "I build responsive and user-friendly web applications. Passionate about clean code and great UI/UX.",
-    },
-    {
-      id: 2,
-      name: "Sarah Adebajo",
-      role: "UI/UX Designer",
-      skills: ["Design", "Figma", "User Research"],
-      bio: "Passionate about crafting intuitive user experiences and gorgeous interactive wireframes.",
-    },
-    {
-      id: 3,
-      name: "Tosin Tomiwa",
-      role: "Technical Writer",
-      skills: ["Writing", "Markdown", "Documentation"],
-      bio: "Translating complex codebases into crisp, clear guides and developer documentation.",
-    },
-    {
-      id: 4,
-      name: "Aisha Bello",
-      role: "Photographer & Creator",
-      skills: ["Photography", "Lightroom", "Portrait"],
-      bio: "Capturing authentic stories and vibrant campus moments through the lens.",
-    },
-    {
-      id: 5,
-      name: "Matthew Collins",
-      role: "Video Editor",
-      skills: ["Video Editing", "Premiere Pro", "After Effects"],
-      bio: "Editing engaging short-form content, tech documentaries, and cinematic projects.",
-    },
-    {
-      id: 6,
-      name: "Olarewaju Joseph",
-      role: "Full Stack Engineer",
-      skills: ["Development", "Node.js", "React"],
-      bio: "Building robust backends and bridging them seamlessly with modern frontend systems.",
-    },
-  ]);
+  // --- Data-loading state ---
+  const [students, setStudents] = useState([]);
+  const [status, setStatus] = useState("loading"); // "loading" | "error" | "success"
+  const [attempt, setAttempt] = useState(0); // bump this to retry
+
+  // Fetch students (re-runs whenever `attempt` changes)
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function load() {
+      try {
+        const data = await fetchStudents({
+          signal: controller.signal,
+          attempt,
+        });
+        setStudents(data);
+        setStatus("success");
+      } catch (err) {
+        if (err.name === "AbortError") return; // we cancelled on purpose
+        setStatus("error");
+      }
+    }
+
+    load();
+    return () => controller.abort();
+  }, [attempt]);
+
+  function handleRetry() {
+    setStatus("loading");
+    setAttempt((n) => n + 1);
+  }
 
   // Real-time filter logic for search input & filter pill chips
   const filteredStudents = students.filter((student) => {
@@ -78,6 +55,46 @@ export default function Directory() {
 
     return matchesSearch && matchesSkill;
   });
+
+  // Decide what to show. Order matters: each branch assumes the earlier ones were false.
+  let content;
+  if (status === "loading") {
+    content = <Message role="status">Loading students…</Message>;
+  } else if (status === "error") {
+    content = (
+      <Message role="alert" title="Couldn't load students.">
+        Check your connection and try again.
+        <br />
+        <button onClick={handleRetry} style={{ marginTop: "16px" }}>
+          Try again
+        </button>
+      </Message>
+    );
+  } else if (students.length === 0) {
+    content = (
+      <Message title="No students have joined yet.">Check back soon.</Message>
+    );
+  } else if (filteredStudents.length === 0) {
+    content = (
+      <Message title="No students found matching your criteria.">
+        Try adjusting your search query or choosing a different skill filter.
+      </Message>
+    );
+  } else {
+    content = (
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+          gap: "24px",
+        }}
+      >
+        {filteredStudents.map((student) => (
+          <StudentCard key={student.id} student={student} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <main className="directory-page">
@@ -105,44 +122,31 @@ export default function Directory() {
           <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#0b1e43" }}>
             Explore Students
           </h2>
-          <span
-            style={{ color: "#64748b", fontSize: "14px", fontWeight: "500" }}
-          >
-            Showing {filteredStudents.length} student
-            {filteredStudents.length === 1 ? "" : "s"}
-          </span>
+          {status === "success" && (
+            <span
+              style={{ color: "#64748b", fontSize: "14px", fontWeight: "500" }}
+            >
+              Showing {filteredStudents.length} student
+              {filteredStudents.length === 1 ? "" : "s"}
+            </span>
+          )}
         </div>
 
-        {filteredStudents.length > 0 ? (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-              gap: "24px",
-            }}
-          >
-            {filteredStudents.map((student) => (
-              <StudentCard key={student.id} student={student} />
-            ))}
-          </div>
-        ) : (
-          <div
-            style={{
-              textAlign: "center",
-              padding: "60px 20px",
-              color: "#64748b",
-            }}
-          >
-            <p style={{ fontSize: "18px", fontWeight: "600" }}>
-              No students found matching your criteria.
-            </p>
-            <p style={{ fontSize: "14px", marginTop: "8px" }}>
-              Try adjusting your search query or choosing a different skill
-              filter.
-            </p>
-          </div>
-        )}
+        {content}
       </section>
     </main>
+  );
+}
+
+// Small helper for loading / error / empty messages (same file, not exported)
+function Message({ title, children, role }) {
+  return (
+    <div
+      role={role}
+      style={{ textAlign: "center", padding: "60px 20px", color: "#64748b" }}
+    >
+      {title && <p style={{ fontSize: "18px", fontWeight: "600" }}>{title}</p>}
+      <p style={{ fontSize: "14px", marginTop: "8px" }}>{children}</p>
+    </div>
   );
 }

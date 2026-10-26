@@ -42,7 +42,7 @@ function Navbar() {
           className="hamburger"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation"
-          airal-expanded={menuOpen}
+          aria-expanded={menuOpen}
         >
           ☰
         </button>

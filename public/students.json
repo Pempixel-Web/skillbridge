@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "Ezekiel Vincent",
+    "role": "Frontend Developer",
+    "skills": ["React", "Javascript", "CSS", "Development"],
+    "bio": "I build responsive and user-friendly web applications. Passionate about clean code and great UI/UX."
+  },
+  {
+    "id": 2,
+    "name": "Sarah Adebajo",
+    "role": "UI/UX Designer",
+    "skills": ["Design", "Figma", "User Research"],
+    "bio": "Passionate about crafting intuitive user experiences and gorgeous interactive wireframes."
+  },
+  {
+    "id": 3,
+    "name": "Tosin Tomiwa",
+    "role": "Technical Writer",
+    "skills": ["Writing", "Markdown", "Documentation"],
+    "bio": "Translating complex codebases into crisp, clear guides and developer documentation."
+  },
+  {
+    "id": 4,
+    "name": "Aisha Bello",
+    "role": "Photographer & Creator",
+    "skills": ["Photography", "Lightroom", "Portrait"],
+    "bio": "Capturing authentic stories and vibrant campus moments through the lens."
+  },
+  {
+    "id": 5,
+    "name": "Matthew Collins",
+    "role": "Video Editor",
+    "skills": ["Video Editing", "Premiere Pro", "After Effects"],
+    "bio": "Editing engaging short-form content, tech documentaries, and cinematic projects."
+  },
+  {
+    "id": 6,
+    " name": "Olarewaju Joseph",
+    "role": "Full Stack Engineer",
+    "skills": ["Development", "Node.js", "React"],
+    "bio": "Building robust backends and bridging them seamlessly with modern frontend systems."
+  }
+]

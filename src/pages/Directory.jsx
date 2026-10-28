@@ -1,7 +1,21 @@
 import { useEffect, useState } from "react";
+import StateMessage from "../components/StateMessage.jsx";
 import Hero from "../components/Hero.jsx";
 import StudentCard from "../components/StudentCard.jsx";
 import { fetchStudents } from "../api/students.js";
+
+// Keep only usable profiles and fill in missing fields so bad data can't crash the page.
+function cleanStudents(data) {
+  if (!Array.isArray(data)) return [];
+  return data
+    .filter((s) => s && s.id != null && typeof s.name === "string")
+    .map((s) => ({
+      role: "",
+      bio: "",
+      ...s,
+      skills: Array.isArray(s.skills) ? s.skills : [],
+    }));
+}
 
 export default function Directory() {
   // --- Filter state ---
@@ -23,7 +37,7 @@ export default function Directory() {
           signal: controller.signal,
           attempt,
         });
-        setStudents(data);
+        setStudents(cleanStudents(data));
         setStatus("success");
       } catch (err) {
         if (err.name === "AbortError") return; // we cancelled on purpose
@@ -40,8 +54,19 @@ export default function Directory() {
     setAttempt((n) => n + 1);
   }
 
+  // Guard against bad data: skip broken entries and fill in missing fields,
+  // so one malformed profile can never crash the page.
+  const safeStudents = students
+    .filter((s) => s && s.id != null && typeof s.name === "string")
+    .map((s) => ({
+      ...s,
+      role: s.role ?? "",
+      bio: s.bio ?? "",
+      skills: Array.isArray(s.skills) ? s.skills : [],
+    }));
+
   // Real-time filter logic for search input & filter pill chips
-  const filteredStudents = students.filter((student) => {
+  const filteredStudents = safeStudents.filter((student) => {
     const matchesSearch =
       student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       student.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -59,26 +84,26 @@ export default function Directory() {
   // Decide what to show. Order matters: each branch assumes the earlier ones were false.
   let content;
   if (status === "loading") {
-    content = <Message role="status">Loading students…</Message>;
+    content = <StateMessage role="status">Loading students…</StateMessage>;
   } else if (status === "error") {
     content = (
-      <Message role="alert" title="Couldn't load students.">
+      <StateMessage role="alert" title="Couldn't load students.">
         Check your connection and try again.
         <br />
         <button onClick={handleRetry} style={{ marginTop: "16px" }}>
           Try again
         </button>
-      </Message>
+      </StateMessage>
     );
-  } else if (students.length === 0) {
+  } else if (safeStudents.length === 0) {
     content = (
-      <Message title="No students have joined yet.">Check back soon.</Message>
+      <StateMessage title="No students have joined yet.">Check back soon.</StateMessage>
     );
   } else if (filteredStudents.length === 0) {
     content = (
-      <Message title="No students found matching your criteria.">
+      <StateMessage title="No students found matching your criteria.">
         Try adjusting your search query or choosing a different skill filter.
-      </Message>
+      </StateMessage>
     );
   } else {
     content = (
@@ -135,18 +160,5 @@ export default function Directory() {
         {content}
       </section>
     </main>
-  );
-}
-
-// Small helper for loading / error / empty messages (same file, not exported)
-function Message({ title, children, role }) {
-  return (
-    <div
-      role={role}
-      style={{ textAlign: "center", padding: "60px 20px", color: "#64748b" }}
-    >
-      {title && <p style={{ fontSize: "18px", fontWeight: "600" }}>{title}</p>}
-      <p style={{ fontSize: "14px", marginTop: "8px" }}>{children}</p>
-    </div>
   );
 }

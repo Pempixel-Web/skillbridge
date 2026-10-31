@@ -1,42 +1,23 @@
-// import './Navbar.css'
-
-// function Navbar() {
-//   return (
-//     <header>
-//       <nav>
-//         <a href="#" className="logo">
-//           SkillBridge
-//         </a>
-
-//         <div>
-//           <a href="#">Discover</a>
-//           <a href="#">About</a>
-//           <a href="#">How it works</a>
-//           <a href="#">
-//             <button>Join the Community</button>
-//           </a>
-//         </div>
-//       </nav>
-//     </header>
-//   );
-// }
-
-// export default Navbar;
-
 import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const closeMenu = () => setMenuOpen(false);
+  const linkClass = ({ isActive }) => (isActive ? "active" : "");
+
   return (
     <>
       <nav className="navbar">
-        <img
-          src="https://res.cloudinary.com/rclvnovx/image/upload/v1792145642/skillbridge_logo.svg"
-          alt="Skillbridge Logo"
-          className="logo"
-        />
+        <Link to="/" onClick={closeMenu} aria-label="SkillBridge home">
+          <img
+            src="https://res.cloudinary.com/rclvnovx/image/upload/v1792145642/skillbridge_logo.svg"
+            alt="Skillbridge Logo"
+            className="logo"
+          />
+        </Link>
 
         <button
           className="hamburger"
@@ -49,15 +30,20 @@ function Navbar() {
 
         <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
           <li>
-            <a href="#home" className="active">
+            {/* Takes the visitor to the "Explore Students" section on the Home page */}
+            <NavLink to="/#explore" end className={linkClass} onClick={closeMenu}>
               Discover
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="#about">About</a>
+            <NavLink to="/about" className={linkClass} onClick={closeMenu}>
+              About
+            </NavLink>
           </li>
           <li>
-            <a href="#How it works">How it works</a>
+            <NavLink to="/how-it-works" className={linkClass} onClick={closeMenu}>
+              How it works
+            </NavLink>
           </li>
           <li>
             <a href="#Join the Community">

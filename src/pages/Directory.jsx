@@ -133,8 +133,14 @@ export default function Directory() {
 
       {/* Explore Students Grid Section */}
       <section
+        id="explore"
         className="explore-section"
-        style={{ maxWidth: "1440px", margin: "0 auto", padding: "40px 4.3%" }}
+        style={{
+          maxWidth: "1440px",
+          margin: "0 auto",
+          padding: "40px 4.3%",
+          scrollMarginTop: "16px",
+        }}
       >
         <div
           style={{

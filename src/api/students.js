@@ -1,26 +1,43 @@
-// All "talking to the data source" lives in this one file.
-// Later, swapping to a real backend means editing only this file.
+// All "talking to the data source" for the directory lives here.
+import { supabase } from "../lib/supabaseClient.js";
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-// Shared helper: fetch a JSON file, with demo failure modes.
-async function getJson(url, { signal, attempt = 0 } = {}) {
-  // --- Demo helpers: delete this block when you get a real API ---
-  const mode = new URLSearchParams(window.location.search).get("simulate");
-  await sleep(1200); // fake network delay so you can SEE the loading state
-  if (mode === "error") throw new Error("Simulated server failure");
-  if (mode === "flaky" && attempt === 0) throw new Error("Simulated flaky failure");
-  if (mode === "empty") return [];
-  // ---------------------------------------------------------------
-
-  const response = await fetch(url, { signal });
-  if (!response.ok) {
-    throw new Error(`Request failed with status ${response.status}`);
-  }
-  return response.json();
+// Shape the rest of the app already expects: { id, name, role, bio, skills, avatar }
+export function toStudent(row) {
+  return {
+    id: row.id,
+    name: row.full_name || "Unnamed student",
+    role: row.role || "",
+    department: row.department || "",
+    level: row.level || "",
+    bio: row.bio || "",
+    skills: Array.isArray(row.skills) ? row.skills : [],
+    avatar: row.avatar_url || "",
+  };
 }
 
-export const fetchStudents = (options) => getJson("/students.json", options);
+const COLUMNS = "id, full_name, role, department, level, bio, avatar_url, skills";
 
-export const fetchExploreStudents = (options) =>
-  getJson("/explore-students.json", options);
+// Directory list. Row Level Security decides what each visitor is allowed to see
+// (guests only get "public" profiles; logged-in students also get "students only").
+export async function fetchStudents({ signal } = {}) {
+  let query = supabase
+    .from("profiles")
+    .select(COLUMNS)
+    .eq("onboarding_complete", true)
+    .neq("visibility", "hidden")
+    .order("created_at", { ascending: false })
+    .limit(200);
+  if (signal) query = query.abortSignal(signal);
+
+  const { data, error } = await query;
+  if (error) throw error;
+  return (data || []).map(toStudent);
+}
+
+export async function fetchStudentById(id, { signal } = {}) {
+  let query = supabase.from("profiles").select(COLUMNS).eq("id", id).maybeSingle();
+  if (signal) query = query.abortSignal(signal);
+  const { data, error } = await query;
+  if (error) throw error;
+  return data ? toStudent(data) : null;
+}

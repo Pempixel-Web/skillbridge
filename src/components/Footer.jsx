@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 export default function Footer() {
@@ -17,9 +18,10 @@ export default function Footer() {
         <div className="footer-col">
           <h3>Discover</h3>
           <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#how-it-works">How it works</a></li>
-            <li><a href="#community">Community</a></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/how-it-works">How it works</Link></li>
+            <li><Link to="/guidelines">Community guidelines</Link></li>
           </ul>
         </div>
 
@@ -27,8 +29,8 @@ export default function Footer() {
         <div className="footer-col">
           <h3>Join us</h3>
           <ul>
-            <li><a href="#volunteer">volunteer</a></li>
-            <li><a href="#career">Career</a></li>
+            <li><Link to="/signup">Create account</Link></li>
+            <li><Link to="/login">Log in</Link></li>
           </ul>
         </div>
 

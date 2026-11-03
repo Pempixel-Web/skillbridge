@@ -1,4 +1,13 @@
-import { EyeOff, MessageCircleQuestion, Network, DoorOpen } from "lucide-react";
+import {
+  EyeOff,
+  MessageCircleQuestion,
+  Network,
+  DoorOpen,
+  Search,
+  Tags,
+  IdCard,
+  Bookmark,
+} from "lucide-react";
 
 import { Link } from "react-router-dom";
 import "./About.css";

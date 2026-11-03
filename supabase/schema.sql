@@ -89,6 +89,12 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
+-- Back-fill: create profiles for anyone who signed up BEFORE this script was run
+insert into public.profiles (id, full_name)
+select id, left(coalesce(raw_user_meta_data ->> 'full_name', ''), 80)
+from auth.users
+on conflict (id) do nothing;
+
 -- ---------------------------------------------------------------------
 -- 6. KEEP updated_at FRESH
 -- ---------------------------------------------------------------------
@@ -128,8 +134,13 @@ drop policy if exists "profiles: update own" on public.profiles;
 create policy "profiles: update own" on public.profiles
   for update using (auth.uid() = id) with check (auth.uid() = id);
 
--- (no insert policy needed: the trigger above creates the row;
---  no delete policy: students delete via delete_my_account() below)
+-- Lets the app self-heal: if a profile row is ever missing, the student's own
+-- row can be created. (Normally the trigger above creates it at signup.)
+drop policy if exists "profiles: insert own" on public.profiles;
+create policy "profiles: insert own" on public.profiles
+  for insert with check (auth.uid() = id);
+
+-- (no delete policy: students delete via delete_my_account() below)
 
 -- PROFILE CONTACTS — only logged-in students, only for visible profiles
 drop policy if exists "contacts: read" on public.profile_contacts;

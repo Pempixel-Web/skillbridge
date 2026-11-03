@@ -25,6 +25,7 @@ export async function fetchContact(profileId) {
 
 export async function saveOwnProfile(userId, form, { complete = false } = {}) {
   const payload = {
+    id: userId,
     full_name: form.full_name.trim(),
     role: form.role.trim(),
     department: form.department.trim(),
@@ -36,7 +37,8 @@ export async function saveOwnProfile(userId, form, { complete = false } = {}) {
   };
   if (complete) payload.onboarding_complete = true;
 
-  const { error } = await supabase.from("profiles").update(payload).eq("id", userId);
+  // upsert = update the row, or create it if it is somehow missing
+  const { error } = await supabase.from("profiles").upsert(payload, { onConflict: "id" });
   if (error) throw error;
 
   const link = (form.contact_link || "").trim();

@@ -1,5 +1,6 @@
-import { useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { initialLinkError } from "./lib/authLinkError.js";
+import { BrowserRouter, Link, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import BottomNav from "./components/BottomNav";
@@ -42,6 +43,48 @@ function ScrollManager() {
   return null;
 }
 
+// Explains failed email links instead of leaving the student on a confusing page.
+function AuthLinkNotice() {
+  const [open, setOpen] = useState(Boolean(initialLinkError));
+  if (!open) return null;
+
+  const expired = initialLinkError?.code === "otp_expired";
+  return (
+    <div
+      role="alert"
+      style={{
+        background: "#fff4d6",
+        color: "#5c3d00",
+        padding: "14px 4.3%",
+        fontFamily: "Inter, sans-serif",
+        fontSize: 14,
+        lineHeight: 1.6,
+        display: "flex",
+        gap: 16,
+        alignItems: "flex-start",
+        justifyContent: "space-between",
+      }}
+    >
+      <span>
+        <strong>
+          {expired ? "That email link has expired or was already used." : "That email link didn't work."}
+        </strong>{" "}
+        If you already clicked it once, your email may be verified. Try{" "}
+        <Link to="/login" onClick={() => setOpen(false)}>logging in</Link>. Otherwise,{" "}
+        <Link to="/verify-email" onClick={() => setOpen(false)}>request a new link</Link>.
+      </span>
+      <button
+        type="button"
+        onClick={() => setOpen(false)}
+        aria-label="Dismiss"
+        style={{ border: 0, background: "none", fontSize: 18, cursor: "pointer", color: "inherit" }}
+      >
+        ✕
+      </button>
+    </div>
+  );
+}
+
 // Friendly screen shown until the .env file has been filled in.
 function SetupNeeded() {
   return (
@@ -65,6 +108,7 @@ function App() {
       <AuthProvider>
         <ScrollManager />
         <Navbar />
+        <AuthLinkNotice />
         <Routes>
           {/* Public */}
           <Route path="/" element={<Directory />} />

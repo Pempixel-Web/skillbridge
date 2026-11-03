@@ -88,7 +88,10 @@
   font-size: 15px;
   font-weight: 700;
   text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
 }
 
 .about-btn:hover {
@@ -205,7 +208,7 @@
   color: #475569;
 }
 
-.about-icon {
+/* .about-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -215,6 +218,22 @@
   border-radius: 12px;
   background: #e5edff;
   font-size: 22px;
+} */
+
+.about-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 62px;
+  height: 62px;
+  margin-bottom: 16px;
+
+  border-radius: 16px;
+  background: #e5edff;
+  color: #2563eb;
+
+  flex-shrink: 0;
 }
 
 .about-card-solution h3 {

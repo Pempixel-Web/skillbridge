@@ -1,24 +1,51 @@
+import { EyeOff, MessageCircleQuestion, Network, DoorOpen } from "lucide-react";
+
 import { Link } from "react-router-dom";
 import "./About.css";
 
+// const PROBLEMS = [
+//   {
+//     icon: EyeOff,
+//     title: "Skills stay hidden",
+//     text: "A first-year who edits videos brilliantly or a final-year who designs beautiful posters is usually known only to their own classmates. Everyone else on campus has no idea they exist.",
+//   },
+//   {
+//     icon: "💬",
+//     title: "Finding help means guessing",
+//     text: "Today, looking for a designer or a developer means posting in group chats and hoping the right person sees it. It is slow, random, and easy to miss.",
+//   },
+//   {
+//     icon: "🧱",
+//     title: "Departments live in silos",
+//     text: "A Computer Science student with an app idea rarely meets the Fine Arts student who could design it. Talent exists on campus, but it is spread across departments and levels that never mix.",
+//   },
+//   {
+//     icon: "🚪",
+//     title: "Opportunities go to the already-known",
+//     text: "Project teams, competitions, and side gigs usually go to people who are already popular or well connected. Quiet, new, or off-campus students get left out, even when they are just as good.",
+//   },
+// ];
+
+// import { EyeOff, MessageCircleQuestion, Network, DoorOpen } from "lucide-react";
+
 const PROBLEMS = [
   {
-    icon: "🙈",
+    icon: EyeOff,
     title: "Skills stay hidden",
     text: "A first-year who edits videos brilliantly or a final-year who designs beautiful posters is usually known only to their own classmates. Everyone else on campus has no idea they exist.",
   },
   {
-    icon: "💬",
+    icon: MessageCircleQuestion,
     title: "Finding help means guessing",
     text: "Today, looking for a designer or a developer means posting in group chats and hoping the right person sees it. It is slow, random, and easy to miss.",
   },
   {
-    icon: "🧱",
+    icon: Network,
     title: "Departments live in silos",
     text: "A Computer Science student with an app idea rarely meets the Fine Arts student who could design it. Talent exists on campus, but it is spread across departments and levels that never mix.",
   },
   {
-    icon: "🚪",
+    icon: DoorOpen,
     title: "Opportunities go to the already-known",
     text: "Project teams, competitions, and side gigs usually go to people who are already popular or well connected. Quiet, new, or off-campus students get left out, even when they are just as good.",
   },
@@ -28,7 +55,7 @@ const SOLUTIONS = [
   {
     icon: "🔎",
     title: "Search by name, role, or skill",
-    text: "Type what you need, like \"Figma\" or \"photographer\", and results narrow down as you type.",
+    text: 'Type what you need, like "Figma" or "photographer", and results narrow down as you type.',
   },
   {
     icon: "🏷️",
@@ -101,13 +128,13 @@ export default function About() {
             <h2>Students have skills. Other students just can't find them.</h2>
             <p>
               Universities bring thousands of talented people together, yet
-              there is no simple way to see who can do what. That gap hurts
-              both sides.
+              there is no simple way to see who can do what. That gap hurts both
+              sides.
             </p>
           </div>
 
           <div className="about-grid about-grid-2">
-            {PROBLEMS.map((item) => (
+            {/* {PROBLEMS.map((item) => (
               <article className="about-card" key={item.title}>
                 <span className="about-icon" aria-hidden="true">
                   {item.icon}
@@ -115,7 +142,22 @@ export default function About() {
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </article>
-            ))}
+            ))} */}
+
+            {PROBLEMS.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <article className="about-card" key={item.title}>
+                  <span className="about-icon" aria-hidden="true">
+                    <Icon size={24} strokeWidth={1.8} />
+                  </span>
+
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -165,7 +207,10 @@ export default function About() {
 
           <div className="about-grid about-grid-4">
             {SOLUTIONS.map((item) => (
-              <article className="about-card about-card-solution" key={item.title}>
+              <article
+                className="about-card about-card-solution"
+                key={item.title}
+              >
                 <span className="about-icon" aria-hidden="true">
                   {item.icon}
                 </span>
@@ -193,8 +238,8 @@ export default function About() {
               <h3>Students with a skill to share</h3>
               <p>
                 Developers, designers, writers, photographers, video editors,
-                and more. Get found for what you do best, even if you are new
-                on campus or not the loudest voice in the room.
+                and more. Get found for what you do best, even if you are new on
+                campus or not the loudest voice in the room.
               </p>
             </article>
             <article className="about-audience">
@@ -249,7 +294,10 @@ export default function About() {
         <div className="about-container">
           <div className="about-cta">
             <h2>Ready to find your next collaborator?</h2>
-            <p>Browse the directory and see how easy it is to make the right connection.</p>
+            <p>
+              Browse the directory and see how easy it is to make the right
+              connection.
+            </p>
             <div className="about-actions about-actions-center">
               <Link to="/#explore" className="about-btn about-btn-light">
                 Explore students

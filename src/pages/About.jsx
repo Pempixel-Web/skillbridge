@@ -51,24 +51,47 @@ const PROBLEMS = [
   },
 ];
 
+// const SOLUTIONS = [
+//   {
+//     icon: "🔎",
+//     title: "Search by name, role, or skill",
+//     text: 'Type what you need, like "Figma" or "photographer", and results narrow down as you type.',
+//   },
+//   {
+//     icon: "🏷️",
+//     title: "Filter with skill chips",
+//     text: "One tap on a skill such as Design, Writing, or Development shows only the students who have it.",
+//   },
+//   {
+//     icon: "🪪",
+//     title: "Profiles that show real strengths",
+//     text: "Each profile gives a student's role, skills, and a short bio, so you know who they are before you reach out.",
+//   },
+//   {
+//     icon: "🔖",
+//     title: "Save people you like",
+//     text: "Bookmark the profiles you want to come back to, so a good collaborator is never lost.",
+//     soon: true,
+//   },
+// ];
 const SOLUTIONS = [
   {
-    icon: "🔎",
+    icon: Search,
     title: "Search by name, role, or skill",
     text: 'Type what you need, like "Figma" or "photographer", and results narrow down as you type.',
   },
   {
-    icon: "🏷️",
+    icon: Tags,
     title: "Filter with skill chips",
     text: "One tap on a skill such as Design, Writing, or Development shows only the students who have it.",
   },
   {
-    icon: "🪪",
+    icon: IdCard,
     title: "Profiles that show real strengths",
     text: "Each profile gives a student's role, skills, and a short bio, so you know who they are before you reach out.",
   },
   {
-    icon: "🔖",
+    icon: Bookmark,
     title: "Save people you like",
     text: "Bookmark the profiles you want to come back to, so a good collaborator is never lost.",
     soon: true,
@@ -206,7 +229,7 @@ export default function About() {
           </div>
 
           <div className="about-grid about-grid-4">
-            {SOLUTIONS.map((item) => (
+            {/* {SOLUTIONS.map((item) => (
               <article
                 className="about-card about-card-solution"
                 key={item.title}
@@ -220,7 +243,31 @@ export default function About() {
                 </h3>
                 <p>{item.text}</p>
               </article>
-            ))}
+            ))} */}
+
+            {SOLUTIONS.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <article
+                  className="about-card about-card-solution"
+                  key={item.title}
+                >
+                  <span className="about-icon" aria-hidden="true">
+                    <Icon size={24} strokeWidth={1.8} />
+                  </span>
+
+                  <h3>
+                    {item.title}
+                    {item.soon && (
+                      <span className="about-soon">Coming soon</span>
+                    )}
+                  </h3>
+
+                  <p>{item.text}</p>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

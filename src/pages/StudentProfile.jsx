@@ -1,3 +1,5 @@
+import { ArrowUpRight } from "lucide-react";
+
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
@@ -12,7 +14,12 @@ export default function StudentProfile() {
   const { user, isSaved, setSaved } = useAuth();
 
   // result is tagged with the id it belongs to, so a stale result is never shown
-  const [result, setResult] = useState({ id: null, status: "loading", student: null, contact: "" });
+  const [result, setResult] = useState({
+    id: null,
+    status: "loading",
+    student: null,
+    contact: "",
+  });
   const status = result.id === id ? result.status : "loading"; // loading | error | notfound | ready
   const student = result.student;
   const contact = result.contact;
@@ -29,7 +36,13 @@ export default function StudentProfile() {
     (async () => {
       try {
         const s = await fetchStudentById(id, { signal: controller.signal });
-        if (!s) return setResult({ id, status: "notfound", student: null, contact: "" });
+        if (!s)
+          return setResult({
+            id,
+            status: "notfound",
+            student: null,
+            contact: "",
+          });
         const c = await fetchContact(id);
         if (controller.signal.aborted) return;
         setResult({ id, status: "ready", student: s, contact: c });
@@ -55,7 +68,8 @@ export default function StudentProfile() {
 
   async function submitReport(e) {
     e.preventDefault();
-    if (!reason) return setReportMsg({ type: "error", text: "Choose a reason." });
+    if (!reason)
+      return setReportMsg({ type: "error", text: "Choose a reason." });
     setReporting(true);
     try {
       await reportProfile(user.id, id, reason, details);
@@ -67,7 +81,10 @@ export default function StudentProfile() {
       setReason("");
       setDetails("");
     } catch {
-      setReportMsg({ type: "error", text: "Couldn't send your report. Please try again." });
+      setReportMsg({
+        type: "error",
+        text: "Couldn't send your report. Please try again.",
+      });
     } finally {
       setReporting(false);
     }
@@ -76,7 +93,9 @@ export default function StudentProfile() {
   if (status === "loading") {
     return (
       <main className="account-page">
-        <p className="account-state" role="status">Loading profile…</p>
+        <p className="account-state" role="status">
+          Loading profile…
+        </p>
       </main>
     );
   }
@@ -85,13 +104,19 @@ export default function StudentProfile() {
     return (
       <main className="account-page">
         <div className="account-state" role="alert">
-          <h1>{status === "notfound" ? "Profile not found" : "Couldn't load this profile"}</h1>
+          <h1>
+            {status === "notfound"
+              ? "Profile not found"
+              : "Couldn't load this profile"}
+          </h1>
           <p>
             {status === "notfound"
               ? "This student may have changed their privacy settings or left SkillBridge."
               : "Check your connection and try again."}
           </p>
-          <Link to="/#explore" className="btn-primary btn-link">Back to students</Link>
+          <Link to="/#explore" className="btn-primary btn-link">
+            Back to students
+          </Link>
         </div>
       </main>
     );
@@ -103,14 +128,25 @@ export default function StudentProfile() {
   return (
     <main className="account-page">
       <div className="account-container narrow">
-        <Link to="/#explore" className="back-link">← Back to students</Link>
+        <Link to="/#explore" className="back-link">
+          ← Back to students
+        </Link>
 
         <article className="account-card profile-view">
           <div className="profile-top">
             {student.avatar ? (
-              <img src={student.avatar} alt={student.name} className="profile-avatar" />
+              <img
+                src={student.avatar}
+                alt={student.name}
+                className="profile-avatar"
+              />
             ) : (
-              <span className="profile-avatar avatar-fallback" aria-hidden="true">{initial}</span>
+              <span
+                className="profile-avatar avatar-fallback"
+                aria-hidden="true"
+              >
+                {initial}
+              </span>
             )}
             <div className="profile-heading">
               <h1>{student.name}</h1>
@@ -124,7 +160,9 @@ export default function StudentProfile() {
               <h2>Skills</h2>
               <div className="tag-row">
                 {student.skills.map((s) => (
-                  <span key={s} className="tag">{s}</span>
+                  <span key={s} className="tag">
+                    {s}
+                  </span>
                 ))}
               </div>
             </>
@@ -145,7 +183,9 @@ export default function StudentProfile() {
               rel="noopener noreferrer nofollow"
               className="btn-primary btn-link"
             >
-              Contact {student.name.split(" ")[0]} ↗
+              {/* Contact {student.name.split(" ")[0]} ↗ */}
+              Contact {student.name.split(" ")[0]}
+              <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           ) : (
             <p className="muted">
@@ -156,17 +196,23 @@ export default function StudentProfile() {
           )}
           {contact && (
             <p className="field-hint">
-              This link opens in a new tab. Be respectful, and never share passwords or
-              send money to someone you haven't met.
+              This link opens in a new tab. Be respectful, and never share
+              passwords or send money to someone you haven't met.
             </p>
           )}
 
           <div className="profile-actions">
             {isMe ? (
-              <Link to="/profile" className="btn-secondary btn-link">Edit my profile</Link>
+              <Link to="/profile" className="btn-secondary btn-link">
+                Edit my profile
+              </Link>
             ) : (
               <>
-                <button type="button" className="btn-secondary" onClick={toggleSave}>
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={toggleSave}
+                >
                   {saved ? "★ Saved" : "☆ Save student"}
                 </button>
                 <button
@@ -182,11 +228,17 @@ export default function StudentProfile() {
               </>
             )}
           </div>
-          {saveError && <p className="form-error" role="alert">{saveError}</p>}
+          {saveError && (
+            <p className="form-error" role="alert">
+              {saveError}
+            </p>
+          )}
 
           {reportMsg.text && !reportOpen && (
             <p
-              className={reportMsg.type === "success" ? "form-success" : "form-error"}
+              className={
+                reportMsg.type === "success" ? "form-success" : "form-error"
+              }
               role={reportMsg.type === "success" ? "status" : "alert"}
             >
               {reportMsg.text}
@@ -198,10 +250,16 @@ export default function StudentProfile() {
               <h2>Report this profile</h2>
               <div className="field">
                 <label htmlFor="reason">What's the problem?</label>
-                <select id="reason" value={reason} onChange={(e) => setReason(e.target.value)}>
+                <select
+                  id="reason"
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                >
                   <option value="">Select a reason</option>
                   {REPORT_REASONS.map((r) => (
-                    <option key={r.value} value={r.value}>{r.label}</option>
+                    <option key={r.value} value={r.value}>
+                      {r.label}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -218,13 +276,23 @@ export default function StudentProfile() {
                 />
               </div>
               {reportMsg.type === "error" && (
-                <p className="form-error" role="alert">{reportMsg.text}</p>
+                <p className="form-error" role="alert">
+                  {reportMsg.text}
+                </p>
               )}
               <div className="wizard-actions">
-                <button type="button" className="btn-secondary" onClick={() => setReportOpen(false)}>
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={() => setReportOpen(false)}
+                >
                   Cancel
                 </button>
-                <button type="submit" className="btn-danger" disabled={reporting}>
+                <button
+                  type="submit"
+                  className="btn-danger"
+                  disabled={reporting}
+                >
                   {reporting ? "Sending…" : "Send report"}
                 </button>
               </div>

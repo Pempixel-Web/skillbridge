@@ -1,3 +1,4 @@
+import { Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout.jsx";
@@ -56,16 +57,26 @@ export default function VerifyEmail() {
         </>
       }
     >
-      <div className="verify-icon" aria-hidden="true">✉️</div>
+      {/* <div className="verify-icon" aria-hidden="true">✉️</div> */}
 
       <ol className="verify-steps">
         <li>Open the email from SkillBridge.</li>
-        <li>Click <strong>Confirm your email</strong>.</li>
+        <li>
+          Click <strong>Confirm your email</strong>.
+        </li>
         <li>Finish setting up your profile.</li>
       </ol>
 
-      {message && <p className="form-success" role="status">{message}</p>}
-      {error && <p className="form-error" role="alert">{error}</p>}
+      {message && (
+        <p className="form-success" role="status">
+          {message}
+        </p>
+      )}
+      {error && (
+        <p className="form-error" role="alert">
+          {error}
+        </p>
+      )}
 
       {email ? (
         <button
@@ -74,7 +85,9 @@ export default function VerifyEmail() {
           onClick={handleResend}
           disabled={cooldown > 0}
         >
-          {cooldown > 0 ? `Resend email in ${cooldown}s` : "Resend verification email"}
+          {cooldown > 0
+            ? `Resend email in ${cooldown}s`
+            : "Resend verification email"}
         </button>
       ) : (
         <Link to="/signup" className="btn-secondary btn-link">

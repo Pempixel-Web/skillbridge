@@ -52,7 +52,10 @@ export default function PasswordField({
         <div className="strength" aria-live="polite">
           <div className="strength-bars">
             {[1, 2, 3].map((n) => (
-              <span key={n} className={s.level >= n ? `on level-${s.level}` : ""} />
+              <span
+                key={n}
+                className={s.level >= n ? `on level-${s.level}` : ""}
+              />
             ))}
           </div>
           <span className="strength-label">{s.label}</span>

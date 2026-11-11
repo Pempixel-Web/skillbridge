@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 
-// Shared card layout used by Signup, Login, Verify, Forgot and Reset pages.
-export default function AuthLayout({ title, subtitle, banner, children, footer }) {
+export default function AuthLayout({
+  title,
+  subtitle,
+  banner,
+  children,
+  footer,
+}) {
   return (
     <main className="auth-page">
       <div className="auth-card">

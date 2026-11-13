@@ -40,7 +40,9 @@ const BottomNav = () => (
         key={link.path}
         to={link.path}
         end={link.path === "/"}
-        className={({ isActive }) => `bottom-nav-item ${isActive ? "active" : ""}`}
+        className={({ isActive }) =>
+          `bottom-nav-item ${isActive ? "active" : ""}`
+        }
       >
         {link.icon}
         <span>{link.label}</span>

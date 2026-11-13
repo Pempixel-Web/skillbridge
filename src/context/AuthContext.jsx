@@ -1,14 +1,9 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "../lib/supabaseClient.js";
 import { AuthContext } from "./auth-context.js";
 import {
   fetchOwnProfile,
+  
   fetchSavedIds,
   addSaved,
   removeSaved,
@@ -40,11 +35,13 @@ export function AuthProvider({ children }) {
       setSessionChecked(true);
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
-      // Keep this callback synchronous (Supabase recommends not awaiting inside it)
-      setSession(newSession ?? null);
-      setSessionChecked(true);
-    });
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, newSession) => {
+        // Keep this callback synchronous (Supabase recommends not awaiting inside it)
+        setSession(newSession ?? null);
+        setSessionChecked(true);
+      },
+    );
 
     return () => {
       active = false;
@@ -66,7 +63,10 @@ export function AuthProvider({ children }) {
       }
       setProfileReady(false);
       try {
-        const [p, ids] = await Promise.all([fetchOwnProfile(userId), fetchSavedIds(userId)]);
+        const [p, ids] = await Promise.all([
+          fetchOwnProfile(userId),
+          fetchSavedIds(userId),
+        ]);
         if (cancelled) return;
         setProfile(p);
         setSavedIds(new Set(ids));
@@ -98,8 +98,14 @@ export function AuthProvider({ children }) {
 
     // Supabase hides whether an email is already registered by returning a user
     // with no identities. Tell the student gently.
-    if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
-      const err = new Error("An account with this email may already exist. Try logging in instead.");
+    if (
+      data.user &&
+      Array.isArray(data.user.identities) &&
+      data.user.identities.length === 0
+    ) {
+      const err = new Error(
+        "An account with this email may already exist. Try logging in instead.",
+      );
       err.code = "already_registered";
       throw err;
     }
@@ -217,9 +223,21 @@ export function AuthProvider({ children }) {
       finishAuthFlow,
     }),
     [
-      user, profile, loading, savedIds, isSaved, setSaved, signUp, signIn, signOut,
-      resendVerification, sendResetEmail, updatePassword, refreshProfile,
-      deleteAccount, finishAuthFlow,
+      user,
+      profile,
+      loading,
+      savedIds,
+      isSaved,
+      setSaved,
+      signUp,
+      signIn,
+      signOut,
+      resendVerification,
+      sendResetEmail,
+      updatePassword,
+      refreshProfile,
+      deleteAccount,
+      finishAuthFlow,
     ],
   );
 

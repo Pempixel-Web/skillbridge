@@ -53,7 +53,11 @@ export default function StudentCard({ student }) {
           <button
             className="bookmark-btn"
             onClick={handleSave}
-            aria-label={saved ? `Remove ${student.name} from saved` : `Save ${student.name}`}
+            aria-label={
+              saved
+                ? `Remove ${student.name} from saved`
+                : `Save ${student.name}`
+            }
             aria-pressed={saved}
             style={saved ? { color: "#3b4df5" } : undefined}
           >
@@ -92,7 +96,10 @@ export default function StudentCard({ student }) {
       <p className="student-bio">{student.bio}</p>
 
       {saveError && (
-        <p role="alert" style={{ color: "#b42318", fontSize: 12, margin: "0 0 8px" }}>
+        <p
+          role="alert"
+          style={{ color: "#b42318", fontSize: 12, margin: "0 0 8px" }}
+        >
           {saveError}
         </p>
       )}

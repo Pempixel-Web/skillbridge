@@ -3,7 +3,8 @@ import { useAuth } from "../context/useAuth.js";
 import { getPending, setPending } from "../lib/pendingAction.js";
 
 // Remember where the visitor wanted to go, without losing a pending "save" action.
-const rememberDestination = (next) => setPending({ ...(getPending() || {}), next });
+const rememberDestination = (next) =>
+  setPending({ ...(getPending() || {}), next });
 
 function PageLoader() {
   return (

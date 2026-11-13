@@ -1,4 +1,4 @@
-// Reusable message for loading / error / empty states.
+
 export default function StateMessage({ title, children, role }) {
   return (
     <div

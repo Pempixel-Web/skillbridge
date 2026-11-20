@@ -1,4 +1,4 @@
-import './Hero.css'
+import "./Hero.css";
 export default function skillfilter() {
   return (
     <>
